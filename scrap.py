@@ -25,3 +25,9 @@ for shop in soup.find_all('div', class_='shop'):
         shop_list.append(shop_details)
 
 # You can then store or display the shop data as needed
+import streamlit as st
+
+# Display the data using Streamlit
+st.title('E-commerce Product Scraper')
+st.write('Scraped Product Data:')
+st.write(product_list)
