@@ -2,38 +2,34 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 
-# Function to scrape product data from Shopee for a specific location
 def scrape_shopee_products(keyword, location):
-    # Define the URL with the specified keyword and location
-    url = f'https://shopee.co.id/search?keyword={keyword}&locations={location}&noCorrection=true&page=0'
-    #https://shopee.co.id/search?keyword=sepatu&locations=Riau&noCorrection=true&page=0
-    # Send an HTTP GET request to Shopee
-    response = requests.get(url)
-    
-    # Parse the HTML content of the page
-    soup = BeautifulSoup(response.content, 'html.parser')
-    
-    # Extract product details
-    product_list = []
-    
-    for product in soup.find_all('div', class_='product'):
-        product_details = {
-            'name': product.find('div', class_='product-name').text,
-            'price': product.find('div', class_='product-price').text,
-        }
-        
-        # You can add more fields as needed
-        
-        product_list.append(product_details)
-    
-    return product_list
+    url = f'https://shopee.com/search?keyword={keyword}&locations={location}'
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        product_list = []
+
+        for product in soup.find_all('div', class_='col-xs-2-4 shopee-search-item-result__item'):
+            product_details = {
+                'name': product.find('div', class_='O6wiAW').text.strip(),
+                'price': product.find('span', class_='VfPpfd ZdBevf i5DZme').text.strip(),
+            }
+            product_list.append(product_details)
+
+        return product_list
+    else:
+        st.error(f"Failed to retrieve data. Status code: {response.status_code}")
+        return []
 
 # Streamlit app
 def main():
     st.title('Shopee Product Scraper')
     keyword = st.text_input('Enter a keyword:')
     location = st.text_input('Enter a location:')
-    
+
     if st.button('Scrape Products'):
         if keyword and location:
             products = scrape_shopee_products(keyword, location)
