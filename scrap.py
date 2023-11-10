@@ -36,7 +36,7 @@ def main():
             products = scrape_shopee_products(keyword, location)
             st.write('Scraped Product Data:')
             st.write(products)
-            st.write(response)
+            st.write(requests.get(url))
         else:
             st.warning('Please enter a keyword and location.')
 
