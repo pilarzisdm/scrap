@@ -2,45 +2,45 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 
-# Function to scrape shop data
-def scrape_shops(location):
-    # Define the URL with the specified location
-    url = f'https://www.shopee.co.id/shops?location={location}'
+# Function to scrape product data from Shopee for a specific location
+def scrape_shopee_products(keyword, location):
+    # Define the URL with the specified keyword and location
+    url = f'https://shopee.com.my/search?keyword={keyword}&location={location}'
     
-    # Send an HTTP GET request to the website
+    # Send an HTTP GET request to Shopee
     response = requests.get(url)
     
     # Parse the HTML content of the page
-    soup = BeautifulSoup(response.text, 'html.parser')
+    soup = BeautifulSoup(response.content, 'html.parser')
     
-    # Extract shop details
-    shop_list = []
+    # Extract product details
+    product_list = []
     
-    for shop in soup.find_all('div', class_='shop'):
-        shop_details = {
-            'name': shop.find('h3').text,
-            'address': shop.find('p', class_='address').text,
-            'description': shop.find('p', class_='description').text,
+    for product in soup.find_all('div', class_='product'):
+        product_details = {
+            'name': product.find('div', class_='product-name').text,
+            'price': product.find('div', class_='product-price').text,
         }
         
-        # Check if the shop is in the desired location
-        if location in shop_details['address']:
-            shop_list.append(shop_details)
+        # You can add more fields as needed
+        
+        product_list.append(product_details)
     
-    return shop_list
+    return product_list
 
 # Streamlit app
 def main():
-    st.title('Web Toko Online E-Commerce')
-    location = st.text_input('Masukan lokasi:')
+    st.title('Shopee Product Scraper')
+    keyword = st.text_input('Enter a keyword:')
+    location = st.text_input('Enter a location:')
     
-    if st.button('Ambil Data'):
-        if location:
-            shops = scrape_shops(location)
-            st.write('Data Hasil Scrap:')
-            st.write(shops)
+    if st.button('Scrape Products'):
+        if keyword and location:
+            products = scrape_shopee_products(keyword, location)
+            st.write('Scraped Product Data:')
+            st.write(products)
         else:
-            st.warning('Please enter a location.')
+            st.warning('Please enter a keyword and location.')
 
 if __name__ == '__main__':
     main()
