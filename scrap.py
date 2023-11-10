@@ -31,10 +31,10 @@ def scrape_shops(location):
 
 # Streamlit app
 def main():
-    st.title('Web Scrap Online Shop E-Commerce')
+    st.title('Web Toko Online E-Commerce')
     location = st.text_input('Masukan lokasi:')
     
-    if st.button('Scrap Toko'):
+    if st.button('Ambil Data'):
         if location:
             shops = scrape_shops(location)
             st.write('Data Hasil Scrap:')
