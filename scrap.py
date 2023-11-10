@@ -34,10 +34,10 @@ def main():
     st.title('Web Scrap Online Shop E-Commerce')
     location = st.text_input('Masukan lokasi:')
     
-    if st.button('Scrape Shops'):
+    if st.button('Scrap Toko'):
         if location:
             shops = scrape_shops(location)
-            st.write('Scraped Shop Data:')
+            st.write('Data Hasil Scrap:')
             st.write(shops)
         else:
             st.warning('Please enter a location.')
