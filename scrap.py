@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 # Function to scrape product data from Shopee for a specific location
 def scrape_shopee_products(keyword, location):
     # Define the URL with the specified keyword and location
-    url = f'https://shopee.com.my/search?keyword={keyword}&location={location}'
-    
+    url = f'https://shopee.co.id/search?keyword={keyword}&location={location}'
+    #https://shopee.co.id/search?keyword=sepatu&locations=Riau&noCorrection=true&page=0
     # Send an HTTP GET request to Shopee
     response = requests.get(url)
     
