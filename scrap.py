@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 def scrape_shopee_products(keyword, location):
-    url = f'https://shopee.co.id/search?keyword={keyword}&locations={location}'
+    url = f'https://shopee.co.id/search?keyword={keyword}&locations={location}&noCorrection=true&page=0'
     #https://shopee.co.id/search?keyword=baju&locations=Bali&noCorrection=true&page=0
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
 
