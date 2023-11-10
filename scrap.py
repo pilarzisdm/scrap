@@ -11,7 +11,7 @@ def scrape_shopee_products(keyword, location):
     url = f'https://shopee.co.id/search?keyword={keyword}&locations={location}&noCorrection=true&page=0'
 
     # Create a Selenium WebDriver instance (you need to specify the path to your web driver)
-    driver = webdriver.Chrome(executable_path='C:\Program Files\Google\Chrome\Application')
+    driver = webdriver.Chrome(executable_path='C:\Program Files\Google\Chrome\Application\')
 
     # Open the URL in the browser
     driver.get(url)
